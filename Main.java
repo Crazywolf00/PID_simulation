@@ -8,7 +8,6 @@ public class Main {
     // pro příkaz v konzoly
     // java Main {argument}
 
-
     public static void main(String[] args) {
         if (args.length == 0) {
             printUsage();
