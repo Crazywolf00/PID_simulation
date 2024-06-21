@@ -1,6 +1,14 @@
 import java.util.List;
 
 public class Main {
+
+    // pustit pomocí příkazu dvou příkazů
+    // pro build projektu
+    // javac Main.java
+    // pro příkaz v konzoly
+    // java Main {argument}
+
+
     public static void main(String[] args) {
         if (args.length == 0) {
             printUsage();
