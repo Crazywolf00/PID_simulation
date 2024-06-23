@@ -21,10 +21,10 @@ public class MapGenerator {
     public static void createStations() {
         Station startStation = new Station(
                 random.nextInt(3, 15),
-                random.nextInt(5, 25));
+                random.nextInt(5, 25), "█S");
         Station endStation = new Station(
                 map.length - random.nextInt(3, 15),
-                map[0].length - random.nextInt(5, 25));
+                map[0].length - random.nextInt(5, 25), "█E");
         stations.add(startStation);
         stations.add(endStation);
 
@@ -39,10 +39,11 @@ public class MapGenerator {
                         stations.get(i + 1).getxPosition(), stations.get(i + 1).getyPosition());
 
                 if (distance > 20) {
-                    Station middleStation = createMiddleStation(stations.get(i), stations.get(i + 1));
+                    Station middleStation = createMiddleStation(stations.get(i), stations.get(i + 1), i);
                     if (isPositionValid(middleStation)) {
                         stationsNew.add(i + 1, middleStation);
                         moreSpace = true;
+                        break;
                     }
                 }
             }
@@ -54,14 +55,14 @@ public class MapGenerator {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
-    public static Station createMiddleStation(Station one, Station two) {
+    public static Station createMiddleStation(Station one, Station two, int i) {
         int xPosition, yPosition;
         do {
-            xPosition = (one.getxPosition() + two.getxPosition()) / 2 ;
-            yPosition = (one.getyPosition() + two.getyPosition()) / 2 ;
+            xPosition = (one.getxPosition() + two.getxPosition()) / 2  + (random.nextInt(-5,5));
+            yPosition = (one.getyPosition() + two.getyPosition()) / 2  + (random.nextInt(-5,5));
         } while (xPosition < 1 || xPosition >= rows || yPosition < 1 || yPosition >= cols);
 
-        return new Station(xPosition, yPosition);
+        return new Station(xPosition, yPosition,  "██");
     }
 
     public static boolean isPositionValid(Station station) {
@@ -100,8 +101,10 @@ public class MapGenerator {
 
     public static void placeStation() {
         for (Station station : stations) {
-            map[station.getxPosition()][station.getyPosition()] = "██";
+            map[station.getxPosition()][station.getyPosition()] = station.getName();
         }
+
+
     }
 
     public static void drawLine(int x1, int y1, int x2, int y2) {
