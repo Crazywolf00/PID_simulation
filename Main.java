@@ -1,3 +1,5 @@
+import map.MapGenerator;
+
 import java.util.List;
 
 public class Main {
@@ -6,18 +8,19 @@ public class Main {
     // pro build projektu
     // javac Main.java
     // pro příkaz v konzoly
-    // java Main {argument}
+    // java Main {argument}ja
 
     public static void main(String[] args) {
+
         if (args.length == 0) {
             printUsage();
             return;
         }
 
-
         switch (args[0]) {
             case "new":
                 System.out.println("todo new");
+                MapGenerator.load();
                 break;
             case "safe":
                 System.out.println("todo safe");
