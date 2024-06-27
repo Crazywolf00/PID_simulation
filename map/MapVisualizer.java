@@ -47,8 +47,6 @@ public class MapVisualizer {
     }
 
     public static void drawLine(boolean horizontalFirst, int x1, int y1, int x2, int y2) {
-
-
         if (horizontalFirst) {
             while (x1 != x2) {
                 if (subwayMap[x1][y1] == null) {
@@ -75,10 +73,6 @@ public class MapVisualizer {
                 }
                 x1 += (x2 > x1) ? 1 : -1;
             }
-        }
-
-        if (subwayMap[x1][y1] == null) {
-            subwayMap[x1][y1] = "##";
         }
     }
 

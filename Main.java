@@ -1,7 +1,4 @@
 import businessLogic.BusinessLogic;
-import map.MapGenerator;
-
-import java.util.List;
 
 public class Main {
 
