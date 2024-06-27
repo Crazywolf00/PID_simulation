@@ -20,7 +20,7 @@ public class Main {
             case "save" -> BusinessLogic.saveSimulation();
             case "load" -> BusinessLogic.loadSimulation();
             case "stop" -> BusinessLogic.stopSimulation();
-            case "play" -> BusinessLogic.playSimulation();
+            case "play" -> BusinessLogic.startSimulation();
             default -> printUsage();
         }
 
