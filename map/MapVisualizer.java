@@ -7,7 +7,6 @@ import java.util.Random;
 
 public class MapVisualizer {
 
-    private static final Random random = new Random();
     private static final String[][] subwayMap = MapGenerator.getSubwayMap();
     private static List<Station> stations = MapGenerator.getStations();
     private static final int rows = subwayMap.length - 1;
