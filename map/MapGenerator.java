@@ -8,23 +8,27 @@ import java.util.Random;
 
 public class MapGenerator {
 
-    private static Random random = new Random();
-    private static String[][] map = new String[35][100];
+    private static final Random random = new Random();
 
+    private static final String[][] subwayMap = new String[50][100];
+    //                                                    ^X^  ^Y^
     private static List<Station> stations = new ArrayList<>();
-    private static int[] startPosition = new int[2];
-    private static int[] endPosition = new int[2];
+    private static final int rows = subwayMap.length - 1;
+    private static final int cols = subwayMap[0].length - 1;
 
-    private static int rows = map.length - 1;
-    private static int cols = map[0].length - 1;
-
+    public static String[][] getSubwayMap() {
+        return subwayMap;
+    }
+    public static List<Station> getStations() {
+        return stations;
+    }
     public static void createStations() {
         Station startStation = new Station(
                 random.nextInt(3, 15),
                 random.nextInt(5, 25), "█S");
         Station endStation = new Station(
-                map.length - random.nextInt(3, 15),
-                map[0].length - random.nextInt(5, 25), "█E");
+                subwayMap.length - random.nextInt(3, 15),
+                subwayMap[0].length - random.nextInt(5, 25), "█E");
         stations.add(startStation);
         stations.add(endStation);
 
@@ -60,7 +64,7 @@ public class MapGenerator {
         do {
             xPosition = (one.getxPosition() + two.getxPosition()) / 2  + (random.nextInt(-5,5));
             yPosition = (one.getyPosition() + two.getyPosition()) / 2  + (random.nextInt(-5,5));
-        } while (xPosition < 1 || xPosition >= rows || yPosition < 1 || yPosition >= cols);
+        } while (xPosition < 1 || xPosition >= rows || yPosition < 1 || yPosition >= cols); //todo generuje se do okrajů
 
         return new Station(xPosition, yPosition,  "██");
     }
@@ -75,110 +79,8 @@ public class MapGenerator {
         return true;
     }
 
-    public static void makeFrame() {
-        for (int i = 1; i <= rows; i++) {
-            for (int j = 1; j <= cols; j++) {
-
-                //frame
-                if (i == 1 && j == 1) {
-                    map[i][j] = "┌─";
-                } else if (i == 1 && j == cols) {
-                    map[i][j] = "─┐";
-                } else if (i == rows && j == 1) {
-                    map[i][j] = "└─";
-                } else if (i == rows && j == cols) {
-                    map[i][j] = "─┘";
-                } else if (i == 1 || i == rows) {
-                    map[i][j] = "──";
-                } else if (j == 1) {
-                    map[i][j] = "│ ";
-                } else if (j == cols) {
-                    map[i][j] = " │";
-                }
-            }
-        }
-    }
-
-    public static void placeStation() {
-        for (Station station : stations) {
-            map[station.getxPosition()][station.getyPosition()] = station.getName();
-        }
-
-
-    }
-
-    public static void drawLine(int x1, int y1, int x2, int y2) {
-        boolean horizontalFirst = random.nextBoolean();
-
-        if (horizontalFirst) {
-            while (x1 != x2) {
-                if (map[x1][y1] == null) {
-                    map[x1][y1] = " ║";
-                }
-                x1 += (x2 > x1) ? 1 : -1;
-            }
-            while (y1 != y2) {
-                if (map[x1][y1] == null) {
-                    map[x1][y1] = "══";
-                }
-                y1 += (y2 > y1) ? 1 : -1;
-            }
-        } else {
-            while (y1 != y2) {
-                if (map[x1][y1] == null) {
-                    map[x1][y1] = "══";
-                }
-                y1 += (y2 > y1) ? 1 : -1;
-            }
-            while (x1 != x2) {
-                if (map[x1][y1] == null) {
-                    map[x1][y1] = " ║";
-                }
-                x1 += (x2 > x1) ? 1 : -1;
-            }
-        }
-
-        if (map[x1][y1] == null) {
-            map[x1][y1] = "##";
-        }
-    }
-
-    public static void drawPaths() {
-        for (int i = 0; i < stations.size() - 1; i++) {
-            Station current = stations.get(i);
-            Station next = stations.get(i + 1);
-            drawLine(current.getxPosition(), current.getyPosition(), next.getxPosition(), next.getyPosition());
-        }
-    }
     public static void load() {
-        makeFrame();
         createStations();
-        placeStation();
-        drawPaths();
-
-        for (int i = 1; i <= rows; i++) {
-            for (int j = 1; j <= cols; j++) {
-                if (map[i][j] == null) {
-                    System.out.print("  ");
-                } else {
-                    System.out.print(map[i][j]);
-                }
-            }
-            System.out.println("");
-        }
-//        for (int i = -1; i <= rows; i++) {
-//            for (int j = -1; j <= cols; j++) {
-//
-//                //stations
-//                    if((i == startPosition[0] && j == startPosition[1]) || (i == endPosition[0] && j == endPosition[1])) {
-//                        System.out.print("XX");
-//                    } else {
-//                        System.out.print("  ");
-//                    }
-//                }
-//            }
-//            System.out.println("");
-//        }
     }
 
 

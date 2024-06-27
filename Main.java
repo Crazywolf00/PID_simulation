@@ -1,3 +1,4 @@
+import businessLogic.BusinessLogic;
 import map.MapGenerator;
 
 import java.util.List;
@@ -18,24 +19,12 @@ public class Main {
         }
 
         switch (args[0]) {
-            case "new":
-                System.out.println("todo new");
-                MapGenerator.load();
-                break;
-            case "safe":
-                System.out.println("todo safe");
-                break;
-            case "load":
-                System.out.println("todo load");
-                break;
-            case "stop":
-                System.out.println("todo stop");
-                break;
-            case "play":
-                System.out.println("todo play");
-                break;
-            default:
-                printUsage();
+            case "new" -> BusinessLogic.newSimulation();
+            case "save" -> BusinessLogic.saveSimulation();
+            case "load" -> BusinessLogic.loadSimulation();
+            case "stop" -> BusinessLogic.stopSimulation();
+            case "play" -> BusinessLogic.playSimulation();
+            default -> printUsage();
         }
 
     }
@@ -47,7 +36,7 @@ public class Main {
         System.out.println();
         System.out.println("  Command line arguments:");
         System.out.println("      new   Run new one");
-        System.out.println("      safe  safe currency");
+        System.out.println("      save  save currency");
         System.out.println("      load  load last safe");
         System.out.println("      stop  stop running simulation");
         System.out.println("      play  run currency simulation");
