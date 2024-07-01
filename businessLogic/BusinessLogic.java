@@ -2,11 +2,13 @@ package businessLogic;
 
 import map.MapGenerator;
 import map.MapVisualizer;
+import models.DataTransfer;
 
 public class BusinessLogic {
 
+    private static DataTransfer dataTransfer;
     public static void newSimulation() {
-        MapGenerator.load();
+        dataTransfer = MapGenerator.load();
         playSimulation();
     }
 
@@ -14,7 +16,7 @@ public class BusinessLogic {
     public static void playSimulation() {
         //todo časovač opakování
         //todo pohyb vlaků a cestujících
-        MapVisualizer.load();
+        MapVisualizer.load(dataTransfer);
     }
 
     public static void stopSimulation() {

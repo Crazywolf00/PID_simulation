@@ -1,14 +1,16 @@
 package map;
 
+import models.DataTransfer;
 import models.Station;
+import models.SubwayLine;
 
 import java.util.List;
 import java.util.Random;
 
 public class MapVisualizer {
 
-    private static final String[][] subwayMap = MapGenerator.getSubwayMap();
-    private static List<Station> stations = MapGenerator.getStations();
+    private static  String[][] subwayMap;
+    private static List<SubwayLine> subwayLines;
     private static final int rows = subwayMap.length - 1;
     private static final int cols = subwayMap[0].length - 1;
 
@@ -37,8 +39,8 @@ public class MapVisualizer {
         }
     }
 
-    public static void placeStation() {
-        for (Station station : stations) {
+    public static void placeStation(SubwayLine stations) {
+        for (Station station : stations.getStations()) {
             subwayMap[station.getxPosition()][station.getyPosition()] = station.getName();
         }
 
@@ -75,7 +77,8 @@ public class MapVisualizer {
         }
     }
 
-    public static void drawPaths() {
+    public static void drawPaths(SubwayLine subwayLine) {
+        List<Station> stations = subwayLine.getStations();
         for (int i = 0; i < stations.size() - 1; i++) {
             Station current = stations.get(i);
             Station next = stations.get(i + 1);
@@ -83,10 +86,16 @@ public class MapVisualizer {
         }
     }
 
-    public static void load() {
+    public static void load(DataTransfer dataTransfer) {
+        subwayMap = dataTransfer.getSubwayMap();
+        subwayLines = dataTransfer.getSubwayLines();
+
         makeFrame();
-        placeStation();
-        drawPaths();
+        for (SubwayLine subwayLine: subwayLines) {
+            placeStation(subwayLine);
+            drawPaths(subwayLine);
+        }
+
 
         for (int i = 1; i <= rows; i++) {
             for (int j = 1; j <= cols; j++) {

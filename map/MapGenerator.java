@@ -1,6 +1,8 @@
 package map;
 
+import models.DataTransfer;
 import models.Station;
+import models.SubwayLine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +15,18 @@ public class MapGenerator {
     private static final String[][] subwayMap = new String[50][100];
     //                                                    ^X^  ^Y^
     private static List<Station> stations = new ArrayList<>();
+    private static List<SubwayLine> subwayLines = new ArrayList<>();
     private static final int rows = subwayMap.length - 1;
     private static final int cols = subwayMap[0].length - 1;
 
     public static String[][] getSubwayMap() {
         return subwayMap;
     }
+
     public static List<Station> getStations() {
         return stations;
     }
+
     public static void createStations() {
         Station startStation = new Station(
                 random.nextInt(3, 15),
@@ -53,6 +58,7 @@ public class MapGenerator {
             }
             stations = stationsNew;
         } while (moreSpace);
+        subwayLines.add(new SubwayLine(stations));
     }
 
     public static double calculateDistance(int x1, int y1, int x2, int y2) {
@@ -62,11 +68,11 @@ public class MapGenerator {
     public static Station createMiddleStation(Station one, Station two, int i) {
         int xPosition, yPosition;
         do {
-            xPosition = (one.getxPosition() + two.getxPosition()) / 2  + (random.nextInt(-5,5));
-            yPosition = (one.getyPosition() + two.getyPosition()) / 2  + (random.nextInt(-5,5));
+            xPosition = (one.getxPosition() + two.getxPosition()) / 2 + (random.nextInt(-5, 5));
+            yPosition = (one.getyPosition() + two.getyPosition()) / 2 + (random.nextInt(-5, 5));
         } while (xPosition < 1 || xPosition >= rows || yPosition < 1 || yPosition >= cols); //todo generuje se do okrajů
 
-        return new Station(xPosition, yPosition,  "██");
+        return new Station(xPosition, yPosition, "██");
     }
 
     public static boolean isPositionValid(Station station) {
@@ -79,8 +85,9 @@ public class MapGenerator {
         return true;
     }
 
-    public static void load() {
+    public static DataTransfer load() {
         createStations();
+        return new DataTransfer(subwayMap, subwayLines);
     }
 
 
