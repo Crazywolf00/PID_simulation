@@ -12,7 +12,7 @@ public class MapGenerator {
 
     private static final Random random = new Random();
 
-    private static final String[][] subwayMap = new String[50][100];
+    private static final String[][] subwayMap = new String[50][50];
     //                                                    ^X^  ^Y^
     private static List<Station> stations = new ArrayList<>();
     private static List<SubwayLine> subwayLines = new ArrayList<>();
@@ -27,13 +27,20 @@ public class MapGenerator {
         return stations;
     }
 
-    public static void createStations() {
+
+    public static void startPositionGenerator() {
+        createStations(
+                new int[]{random.nextInt(3, 15), random.nextInt(5, 25)},
+                new int[]{subwayMap.length - random.nextInt(3, 15),subwayMap[0].length - random.nextInt(5, 25)}
+        );
+    }
+    public static void createStations(int[] start, int[] end) {
         Station startStation = new Station(
-                random.nextInt(3, 15),
-                random.nextInt(5, 25), "█S");
+                start[0],
+                start[1], "█S");
         Station endStation = new Station(
-                subwayMap.length - random.nextInt(3, 15),
-                subwayMap[0].length - random.nextInt(5, 25), "█E");
+                end[0],
+                end[1], "█E");
         stations.add(startStation);
         stations.add(endStation);
 
@@ -86,7 +93,7 @@ public class MapGenerator {
     }
 
     public static DataTransfer load() {
-        createStations();
+        startPositionGenerator();
         return new DataTransfer(subwayMap, subwayLines);
     }
 

@@ -6,10 +6,10 @@ public class Main {
     // pro build projektu
     // javac Main.java
     // pro příkaz v konzoly
-    // java Main {argument}ja
+    // java Main {argument}
 
     public static void main(String[] args) {
-
+        BusinessLogic.newSimulation();
         if (args.length == 0) {
             printUsage();
             return;

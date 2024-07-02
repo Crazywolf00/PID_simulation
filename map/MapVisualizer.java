@@ -11,8 +11,8 @@ public class MapVisualizer {
 
     private static  String[][] subwayMap;
     private static List<SubwayLine> subwayLines;
-    private static final int rows = subwayMap.length - 1;
-    private static final int cols = subwayMap[0].length - 1;
+    private static int rows;
+    private static int cols;
 
 
     public static void makeFrame() {
@@ -89,6 +89,8 @@ public class MapVisualizer {
     public static void load(DataTransfer dataTransfer) {
         subwayMap = dataTransfer.getSubwayMap();
         subwayLines = dataTransfer.getSubwayLines();
+        rows = subwayMap.length - 1;
+        cols = subwayMap[0].length - 1;
 
         makeFrame();
         for (SubwayLine subwayLine: subwayLines) {
